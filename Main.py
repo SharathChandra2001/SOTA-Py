@@ -642,7 +642,12 @@ def main(program, *args):
 	tbudget = float(argparsed.budget) if argparsed.budget is not None else None
 
 	isrc = node_indices[network.make_id(*src)] if src is not None else None
-	idst = node_indices[network.make_id(*dst)] if dst is not None else None
+	try:
+		idst = node_indices[network.make_id(*dst)] if dst is not None else None
+	except KeyError:
+		print("\nSource or destination is not defined")
+		print("Update the new source / destination in the map json data and rerun the main")
+		quit()
 	transpose_graph = False
 	if transpose_graph: (isrc, idst) = (idst, isrc)
 
